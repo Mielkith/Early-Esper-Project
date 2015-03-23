@@ -22,18 +22,19 @@ public class CEPListener implements UpdateListener {
  public void update(EventBean[] newData, EventBean[] oldData) {
          System.out.println("Event received: "
                             + newData[0].getUnderlying());
-         Attribute EventType = new Attribute("EvenType");
+         Attribute EventType = new Attribute("EventType");
          
          Instances set = new Instances("Events",events,0);
-         
+                   Instance inst = new Instance(1); 
+
          for (int i = 0; i < newData.length; i++)
          {
          String temp = newData[i].get("eventType").toString();
+         inst.setValue(EventType, temp);
          eventValues.addElement(temp);
          }
                  
-          Instance inst = new Instance(1); 
-         inst.setValue(EventType, eventValues);
+         //inst.setValue(EventType, eventValues);
         Apriori aprioriObj = new weka.associations.Apriori();
       
 

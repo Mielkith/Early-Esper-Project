@@ -36,7 +36,8 @@ import java.util.Scanner;
         
        public void MakeStream() {
 
-            File file = new File("C:\\Users\\gs023850\\Documents\\w4ndata\\w4ndata.csv");
+            //File file = new File("C:\\Users\\gs023850\\Documents\\w4ndata\\w4ndata.csv");
+            File file = new File("C:\\Users\\Weary\\Documents\\w4ndata\\w4ndata.csv");
             long wait = 0;
             long previousTimeStamp = 0;
             long timeStamp = 0;
