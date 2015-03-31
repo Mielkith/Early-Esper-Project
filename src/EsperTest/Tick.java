@@ -7,15 +7,18 @@ package EsperTest;
  */
  public class Tick {
 
-    String attribute1;
-    String attribute2;
-    String attribute3;
+     
+     
+     
+    double attribute1;
+    double attribute2;
+    double attribute3;
     String attribute4;
 
     public Tick(){};
     
-    public void PopulateTick(String attribute1, String attribute2, 
-        String attribute3,String attribute4){
+    public void PopulateTick(double attribute1, double attribute2, 
+        double attribute3,String attribute4){
 
     this.attribute1 = attribute1;
     this.attribute2 = attribute2;
@@ -23,10 +26,9 @@ package EsperTest;
     this.attribute4 = attribute4;
 
     }
-    
-    public String getAttribute1() {return attribute1;}
-    public String getAttribute2() {return attribute2;}
-    public String getAttribute3() {return attribute3;}
+    public double getAttribute1() {return attribute1;}
+    public double getAttribute2() {return attribute2;}
+    public double getAttribute3() {return attribute3;}
     public String getAttribute4() {return attribute4;}
 
 

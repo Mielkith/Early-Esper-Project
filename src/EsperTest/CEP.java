@@ -43,7 +43,7 @@ public  class CEP {
         // We register an EPL statement
         EPAdministrator cepAdm = cep.getEPAdministrator();
         EPStatement cepStatement = cepAdm.createEPL("select attribute1 as att1, attribute2 as att2,"
-                + " attribute3 as att3, attribute4 as att4 from Tick.win:time_batch(30 sec)"); 
+                + " attribute3 as att3 from Tick.win:time_batch(30 sec)"); 
         //+ "having avg(price) > 6.0");
          cepStatement.addListener(new CEPListener());
          

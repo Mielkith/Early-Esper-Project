@@ -24,7 +24,8 @@ import java.util.Scanner;
 
          public EPRuntime cepRT;
          public String[] currentLine;
-         public String getAttribute(int i) {return currentLine[i];}
+         public String getStringAttribute(int i) {return currentLine[i];}
+         public Double getDoubleAttribute(int i) {return Double.parseDouble(currentLine[i]);}
         
         public GenerateStream(EPRuntime cepRT){
             this.cepRT = cepRT;
@@ -61,9 +62,10 @@ import java.util.Scanner;
                               String stamp = currentLine[0].substring(14, 16);
                               timeStamp = Long.parseLong(currentLine[0].substring(14, 16));
                               //attribute 11 - event name, 15 - element class name, 29 - severity
+                              //20 - active, 22 - duration
                               Tick tick = new Tick();
-                              tick.PopulateTick(getAttribute(11), getAttribute(15),
-                              getAttribute(29),getAttribute(0));
+                              tick.PopulateTick(getDoubleAttribute(30), getDoubleAttribute(20),
+                              getDoubleAttribute(22),getStringAttribute(0));
                               previousTimeStamp = WaitTime(timeStamp, previousTimeStamp, wait);
                               cepRT.sendEvent(tick);
 
