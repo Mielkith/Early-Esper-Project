@@ -64,8 +64,9 @@ import java.util.Scanner;
                               //attribute 11 - event name, 15 - element class name, 29 - severity
                               //20 - active, 22 - duration
                               Tick tick = new Tick();
-                              tick.PopulateTick(getDoubleAttribute(30), getDoubleAttribute(20),
-                              getDoubleAttribute(22),getStringAttribute(0));
+                              tick.PopulateTick(getStringAttribute(10), getStringAttribute(27), getStringAttribute(0),                                                 getStringAttribute(16), getStringAttribute(28), getDoubleAttribute(30), 
+                                                getDoubleAttribute(20),getDoubleAttribute(22));
+                              
                               previousTimeStamp = WaitTime(timeStamp, previousTimeStamp, wait);
                               cepRT.sendEvent(tick);
 
@@ -99,7 +100,7 @@ import java.util.Scanner;
                                   wait = 1; 
                               }
                 previousTimeStamp = timeStamp;
-                System.out.println("Wating: " + wait);
+                System.out.println("Waiting: " + wait);
                 Thread.sleep(wait);
                 return previousTimeStamp;
         }
