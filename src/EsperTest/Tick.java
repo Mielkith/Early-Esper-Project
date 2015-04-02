@@ -14,15 +14,15 @@ package EsperTest;
     String attribute3;
     String attribute4;
     String attribute5;
-    double attribute6;
-    double attribute7;
-    double attribute8;
+    String attribute6;
+    String attribute7;
+    String attribute8;
 
     public Tick(){};
     
     public void PopulateTick(String attribute1,String attribute2,String attribute3,
-                            String attribute4, String attribute5, double attribute6, 
-                           double attribute7, double attribute8){
+                            String attribute4, String attribute5, String attribute6, 
+                           String attribute7, String attribute8){
 
     this.attribute1 = attribute1;
     this.attribute2 = attribute2;
@@ -39,9 +39,9 @@ package EsperTest;
     public String getAttribute3() {return attribute3;}
     public String getAttribute4() {return attribute4;}
     public String getAttribute5() {return attribute5;}
-    public double getAttribute6() {return attribute6;}
-    public double getAttribute7() {return attribute7;}
-    public double getAttribute8() {return attribute8;}
+    public String getAttribute6() {return attribute6;}
+    public String getAttribute7() {return attribute7;}
+    public String getAttribute8() {return attribute8;}
 
 
 

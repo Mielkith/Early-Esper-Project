@@ -18,18 +18,21 @@ import com.espertech.esper.client.*;
  */
 public  class CEP {
 
-    /**
+         static int[] colNumbers = {10,28,0,16,13,30,25,22};
+    /** 
      * @param args the command line arguments
      */
 
-        public static void main(String[] args) {
+        public static void main(String[] args) throws Exception{
   
         SimpleLayout layout = new SimpleLayout();
         ConsoleAppender appender = new ConsoleAppender(new SimpleLayout());
         Logger.getRootLogger().addAppender(appender);
         Logger.getRootLogger().setLevel((Level) Level.WARN);
+        
+        NominalLabels labels = new NominalLabels();
       
-      
+       
         //The Configuration is meant only as an initialization-time object.
         Configuration cepConfig = new Configuration();
         // We register Ticks as objects the engine will have to handle
@@ -41,25 +44,35 @@ public  class CEP {
         EPRuntime cepRT = cep.getEPRuntime();
 
         // We register an EPL statement
+        int i = 0;
         EPAdministrator cepAdm = cep.getEPAdministrator();
+        
+        String  selectStatement =  
+           "select attribute1 as "  + labels.GetHeader(colNumbers[i++]) + ", "
+                + "attribute2 as "  + labels.GetHeader(colNumbers[i++]) + ", "
+                + "attribute3 as "  + labels.GetHeader(colNumbers[i++]) + ", "
+                + "attribute4 as "  + labels.GetHeader(colNumbers[i++]) + ", "
+                + "attribute5 as "  + labels.GetHeader(colNumbers[i++]) + ", "
+                + "attribute6 as "  + labels.GetHeader(colNumbers[i++]) + ", "
+                + "attribute7 as "  + labels.GetHeader(colNumbers[i++]) + ", "
+                + "attribute8 as " + labels.GetHeader(colNumbers[i++])
+                + " from Tick.win:time_batch(20 sec)"; 
+        
         EPStatement cepStatement = cepAdm.createEPL(
-                "select attribute1 as eventName, "
-                + "attribute2 as eventType,"
-                + "attribute3 as eventTime,"
-                + "attribute4 as elementClassName,"
-                + "attribute5 as category,"
-                + "attribute6 as eventSeverity,"
-                + "attribute7 as active,"
-                + " attribute8 as duration from Tick.win:time_batch(20 sec)"); 
-        //+ "having avg(price) > 6.0");
-         cepStatement.addListener(new CEPListener());
-         
-         Thread t = new Thread(new GenerateStream(cepRT));
+               selectStatement); 
+        CEPListener listener = new CEPListener();
+         cepStatement.addListener(listener);
+         //set the labels for the nominal attributes
+         listener.SetLabels(labels);
+         listener.SetColNumber(colNumbers);
+         Thread t = new Thread(new GenerateStream(cepRT, colNumbers));
          t.run();
        
         
            
         }
+        
+        
 
     
     

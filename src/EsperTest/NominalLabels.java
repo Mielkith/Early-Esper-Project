@@ -16,12 +16,13 @@ import java.util.Map;
  *
  * @author gs023850
  */
-public class GetNominals {
+public  class NominalLabels {
     
+    private  Map<Integer, List<String>> labels;
     
-    public static  Map<String, List<String>> main() throws Exception
+    public NominalLabels() throws Exception 
     {
-      String filePath = "C:\\Users\\gs023850\\Documents\\w4ndata\\distinctValues.csv";
+    String filePath = "C:\\Users\\gs023850\\Documents\\w4ndata\\distinctValues.csv";
       //https://github.com/uniVocity/univocity-parsers/#reading-csv
      CsvParserSettings settings = new CsvParserSettings();
      settings.setHeaderExtractionEnabled(true);
@@ -30,9 +31,40 @@ public class GetNominals {
     // settings.selectIndexes(0,11,16,20,22,27,28,30);
      CsvParser parser = new CsvParser(settings);
      parser.parse(new FileReader(filePath));
-     return colProcessor.getColumnValuesAsMapOfNames();
+     //     labels =  colProcessor.getColumnValuesAsMapOfNames();
 
+     labels =  colProcessor.getColumnValuesAsMapOfIndexes();
+
+    
+    };
+    
+   public String GetHeader(int j)
+   {
+       return labels.get(j).get(0);
+   }
+    
+   public int NominalCount(int j)
+   {
+       return labels.get(j).size();
+   }
+   
+    public String GetLabel(int i, int j)
+    {
+         return labels.get(i).get(j);
     }
+    public  String GetLabels(int j)
+      {
+          StringBuilder sb = new StringBuilder();
+          for (String label: labels.get(j))
+          {
+              if (label == null) {break;}
+              sb.append(label);
+              sb.append(",");
+
+          }
+          return sb.toString();
+      }
+ 
     
   
 }

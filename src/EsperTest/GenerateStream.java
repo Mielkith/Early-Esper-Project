@@ -26,9 +26,10 @@ import java.util.Scanner;
          public String[] currentLine;
          public String getStringAttribute(int i) {return currentLine[i];}
          public Double getDoubleAttribute(int i) {return Double.parseDouble(currentLine[i]);}
-        
-        public GenerateStream(EPRuntime cepRT){
+         private int[] colNumbers;
+        public GenerateStream(EPRuntime cepRT, int[] colNumbers){
             this.cepRT = cepRT;
+            this.colNumbers = colNumbers; 
         }
         
         public void run() {
@@ -62,11 +63,18 @@ import java.util.Scanner;
                               String stamp = currentLine[0].substring(14, 16);
                               timeStamp = Long.parseLong(currentLine[0].substring(14, 16));
                               //attribute 11 - event name, 15 - element class name, 29 - severity
-                              //20 - active, 22 - duration
-                              Tick tick = new Tick();
-                              tick.PopulateTick(getStringAttribute(10), getStringAttribute(27), getStringAttribute(0),                                                 getStringAttribute(16), getStringAttribute(28), getDoubleAttribute(30), 
-                                                getDoubleAttribute(20),getDoubleAttribute(22));
+                              //20 - active, 22 - duration, 25 - is problem, 28 - catgeory
                               
+                              int i = 0;
+                              Tick tick = new Tick();
+                              tick.PopulateTick(getStringAttribute(colNumbers[i++]), 
+                                                getStringAttribute(colNumbers[i++]), 
+                                                getStringAttribute(colNumbers[i++]),                                                 
+                                                getStringAttribute(colNumbers[i++]), 
+                                                getStringAttribute(colNumbers[i++]),
+                                                getStringAttribute(colNumbers[i++]),
+                                                getStringAttribute(colNumbers[i++]), 
+                                                getStringAttribute(colNumbers[i++]));
                               previousTimeStamp = WaitTime(timeStamp, previousTimeStamp, wait);
                               cepRT.sendEvent(tick);
 

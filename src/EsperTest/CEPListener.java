@@ -21,7 +21,19 @@ public class CEPListener implements UpdateListener {
     
     private FastVector dataSet = new FastVector();
     private FastVector eventValues = new FastVector();
-    private   Map<String, List<String>> labels;
+    NominalLabels labels;
+    int columnNumbers[];
+    
+    
+    public void SetLabels(NominalLabels labels){
+        this.labels = labels;
+    }   
+    
+    public void SetColNumber(int colNumbers[])
+    {
+        columnNumbers = colNumbers;
+    }
+    
  public void update(EventBean[] newData, EventBean[] oldData)  {
          
      System.out.println("Event received: "
@@ -31,27 +43,34 @@ public class CEPListener implements UpdateListener {
          {
         //create the column name and type, these are strings
         //http://weka.wikispaces.com/Creating+an+ARFF+file
-            try{
-            labels = GetNominals.main();
-
-            }
-            catch (Exception e)
-            {
-                System.out.println(e);
-            }
-          Instances data = null;
-           Add filter = new Add();
-           filter.setNominalLabels(GetLabels(labels, 10));
+         Instances data;
+          FastVector atts = new FastVector();
            
+             
+           for (int j = 0; j < columnNumbers.length; j++)
+           {
+                FastVector values = new FastVector();
+                for (int i = 0; i < labels.NominalCount(j) ; i++)
+                {
+                    values.addElement(labels.GetLabel(j, i));
+                }
+                atts.addElement(new Attribute(labels.GetHeader(j), values));
+           }
 
-          
-            FastVector values = new FastVector();
-            
-
-
-
-
-
+           data = new Instances("Title", atts, 0);
+           
+         
+           
+           for (int i = 0; i < newData.length; i++) {
+                Instance inst = new Instance(columnNumbers.length);
+                for (int j =0; j < columnNumbers.length; j++)
+                {
+                  inst.setValue(j,newData[i].get("eventType").toString());
+                }
+               data.add(inst);
+           }
+           
+           
 
 //string attributes, though one is a time
         Attribute eventName  = new Attribute("eventName", (FastVector)null);
@@ -158,16 +177,6 @@ public class CEPListener implements UpdateListener {
 
          
     }
-        public static String GetLabels(Map<String, List<String>> labels, int j)
-         {
-             StringBuilder sb = new StringBuilder();
-             for (String label: labels.get(j))
-             {
-                 sb.append(label);
-                 sb.append(",");
-             }
-             return sb.toString();
-         }
- 
+     
  
 }
