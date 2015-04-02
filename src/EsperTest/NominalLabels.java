@@ -9,6 +9,8 @@ import com.univocity.parsers.common.processor.ColumnProcessor;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import java.io.FileReader;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +36,23 @@ public  class NominalLabels {
      //     labels =  colProcessor.getColumnValuesAsMapOfNames();
 
      labels =  colProcessor.getColumnValuesAsMapOfIndexes();
+    
+     /*Iterator<Map.Entry<Integer, List<String>>> it = labels.entrySet().iterator();
+      
+     while (it.hasNext()) {
+          
+            Map.Entry<Integer, List<String>> e = it.next();
+            Integer key = e.getKey();
+            List<String> value = e.getValue();
+            Iterator<String> its = value.iterator();
+            while(its.hasNext())
+            {
+                if (its.toString() == null || its.toString() == "null") {
+                    its.remove();
+                }
+            }
+        }*/
+     
 
     
     };
@@ -57,7 +76,7 @@ public  class NominalLabels {
           StringBuilder sb = new StringBuilder();
           for (String label: labels.get(j))
           {
-              if (label == null) {break;}
+              if (label.isEmpty()) {break;}
               sb.append(label);
               sb.append(",");
 
